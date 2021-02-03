@@ -200,11 +200,11 @@ if ( isset($pos) && ($pos!==false) && isset($t_args[$pos+1]) )
 switch(count($t_args))
 {
     case 0:
-        if (isset($conf->source_directory) && isset($conf->target_directory))
+        if (isset($conf->source_directory))
         {
             $process_mode       = 'directory';
             $source_directory   = $conf->source_directory;
-            $target_directory   = $conf->target_directory;
+            $target_directory   = $conf->source_directory."2";;
             create_context_directories($target_directory);
             break;
         }
@@ -246,7 +246,7 @@ switch(count($t_args))
             {
                 $process_mode       = 'directory';
                 $source_directory   = $source_file;
-                $target_directory   = $target;
+                $target_directory   = $source_directory."2";;
                 if (($target_directory=='') && isset($conf->target_directory)) $target_directory = $conf->target_directory;
                 if ( $target_directory=='')
                 {

@@ -106,7 +106,50 @@ switch($process_mode)
         if (isset($conf->t_skip) && is_array($conf->t_skip)) foreach($conf->t_skip as $key=>$val) $conf->t_skip[$key] = "$source_directory/$val";
         if (isset($conf->t_keep) && is_array($conf->t_keep)) foreach($conf->t_keep as $key=>$val) $conf->t_keep[$key] = "$source_directory/$val";
         obfuscate_directory($source_directory,"$target_directory/yakpro-po/obfuscated");
+
+        //deleteDirectory($source_directory);
+        recurseCopy($target_directory.'/yakpro-po/obfuscated/', $source_directory);
+        deleteDirectory($target_directory);
         exit(0);
 }
+
+function deleteDirectory($dir) {
+    if (!file_exists($dir)) {
+        return true;
+    }
+
+    if (!is_dir($dir)) {
+        return unlink($dir);
+    }
+
+    foreach (scandir($dir) as $item) {
+        if ($item == '.' || $item == '..') {
+            continue;
+        }
+
+        if (!deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
+            return false;
+        }
+
+    }
+
+    return rmdir($dir);
+}
+
+function recurseCopy($src,$dst) { 
+    $dir = opendir($src); 
+    @mkdir($dst); 
+    while(false !== ( $file = readdir($dir)) ) { 
+        if (( $file != '.' ) && ( $file != '..' )) { 
+            if (is_dir($src . '/' . $file) ) { 
+                recurseCopy($src . '/' . $file,$dst . '/' . $file); 
+            } 
+            else { 
+                copy($src . '/' . $file,$dst . '/' . $file); 
+            } 
+        } 
+    } 
+    closedir($dir); 
+} 
 
 ?>
