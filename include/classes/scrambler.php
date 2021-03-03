@@ -347,7 +347,7 @@ class Scrambler
             $t[2]   = $this->t_rscramble;
             $t[3]   = $this->scramble_length;
             $t[4]   = $this->label_counter;
-            file_put_contents("{$this->context_directory}/yakpro-po/context/{$this->scramble_type}",serialize($t));
+            //file_put_contents("{$this->context_directory}/yakpro-po/context/{$this->scramble_type}",serialize($t));
         }
     }
 
